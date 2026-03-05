@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samiksha Sonawane · F1 Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #E10600;
+  --black: #080808;
+  --dark: #111111;
+  --card: #161616;
+  --border: #242424;
+  --white: #f0f0f0;
+  --silver: #C0C0C0;
+  --gold: #FFD700;
+  --green: #39FF14;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--black);color:var(--white);font-family:'Rajdhani',sans-serif;overflow-x:hidden;}
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-track{background:#000;}
+::-webkit-scrollbar-thumb{background:var(--red);}
+
+/* ===================== INTRO ===================== */
+#intro{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:#000;z-index:9999;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;
+  transition:opacity 1s ease 0.2s;
+}
+#intro.out{opacity:0;pointer-events:none;}
+.intro-ambient{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 40% at 50% 60%, rgba(180,0,0,0.12) 0%, #000 70%);
+}
+.intro-scan{
+  position:absolute;top:0;left:-100%;width:60%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(225,6,0,0.04),transparent);
+  animation:scan 4s linear infinite;
+}
+@keyframes scan{to{left:200%;}}
+.intro-circuit{
+  position:absolute;bottom:0;left:0;right:0;height:120px;overflow:hidden;opacity:0.15;
+}
+.intro-brand{
+  position:relative;z-index:2;
+  font-family:'Orbitron',sans-serif;font-size:clamp(0.7rem,2vw,1rem);
+  letter-spacing:10px;color:#333;text-transform:uppercase;
+}
+.gantry{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:0;}
+.gantry-top{
+  display:flex;gap:0;
+}
+.gantry-pole{width:4px;height:90px;background:linear-gradient(180deg,#2a2a2a,#1a1a1a);}
+.gantry-pole:first-child{margin-left:36px;}
+.gantry-pole:last-child{margin-right:36px;}
+.gantry-beam{
+  width:420px;height:10px;
+  background:linear-gradient(90deg,#111,#2a2a2a 20%,#333 50%,#2a2a2a 80%,#111);
+  border-radius:3px;
+  box-shadow:0 -2px 8px rgba(0,0,0,0.8);
+}
+.lights-row{display:flex;gap:18px;padding:12px 40px;background:rgba(0,0,0,0.6);border-radius:4px;}
+.light{
+  width:56px;height:56px;border-radius:50%;
+  background:#0d0000;
+  border:3px solid #1a1a1a;
+  position:relative;transition:all 0.15s ease;
+}
+.light.on{
+  background:radial-gradient(circle at 35% 35%, #ff4444, #E10600 50%, #8b0000);
+  border-color:#ff3333;
+  box-shadow:0 0 16px #E10600,0 0 32px rgba(225,6,0,0.7),0 0 64px rgba(225,6,0,0.3),inset 0 0 10px rgba(255,100,100,0.3);
+}
+.light.off{
+  background:#000 !important;border-color:#111 !important;box-shadow:none !important;
+  transition:all 0.05s ease !important;
+}
+#go{
+  position:relative;z-index:2;
+  font-family:'Orbitron',sans-serif;font-size:clamp(2rem,8vw,6rem);font-weight:900;
+  color:var(--red);letter-spacing:6px;
+  opacity:0;transform:scale(0.6);transition:opacity 0.25s ease,transform 0.25s ease;
+  text-shadow:0 0 60px rgba(225,6,0,0.9),0 0 120px rgba(225,6,0,0.4);
+}
+#go.show{opacity:1;transform:scale(1.05);}
+.intro-sub{
+  position:relative;z-index:2;
+  font-family:'Share Tech Mono',monospace;font-size:0.75rem;
+  letter-spacing:6px;color:#333;text-transform:uppercase;
+}
+.intro-sub span{color:var(--red);animation:blink 1.2s step-end infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+
+/* ===================== MAIN ===================== */
+#main{opacity:0;transition:opacity 1s ease 0.4s;}
+#main.show{opacity:1;}
+#main.hidden{display:none;}
+
+/* NAV */
+nav{
+  position:fixed;top:0;width:100%;z-index:1000;height:58px;
+  background:rgba(4,4,4,0.92);backdrop-filter:blur(20px);
+  border-bottom:1px solid #1a1a1a;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;
+}
+.nav-logo{font-family:'Orbitron',sans-serif;font-weight:900;font-size:1rem;letter-spacing:4px;}
+.nav-logo em{color:var(--red);font-style:normal;}
+.nav-links{display:flex;gap:2px;list-style:none;}
+.nav-links a{
+  font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:600;
+  letter-spacing:2px;text-transform:uppercase;color:#555;text-decoration:none;
+  padding:8px 12px;transition:color 0.2s;position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:0;left:0;width:0;height:2px;
+  background:var(--red);transition:width 0.2s;
+}
+.nav-links a:hover{color:var(--white);}
+.nav-links a:hover::after{width:100%;}
+.nav-dl{
+  font-family:'Orbitron',sans-serif;font-size:0.65rem;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+  padding:9px 20px;background:var(--red);color:#fff;border:none;cursor:pointer;
+  text-decoration:none;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
+  transition:background 0.2s;
+}
+.nav-dl:hover{background:#ff1a1a;}
+
+/* HERO */
+#hero{
+  min-height:100vh;position:relative;overflow:hidden;
+  display:flex;align-items:center;padding:80px 60px 60px;
+}
+.hero-grid-bg{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(225,6,0,0.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(225,6,0,0.025) 1px,transparent 1px);
+  background-size:50px 50px;
+  animation:gridmove 25s linear infinite;
+}
+@keyframes gridmove{to{transform:translate(50px,50px);}}
+.hero-stripe{position:absolute;left:0;top:0;width:5px;height:100%;background:var(--red);}
+.hero-stripe2{position:absolute;left:8px;top:0;width:2px;height:100%;background:rgba(225,6,0,0.3);}
+.hero-noise{
+  position:absolute;inset:0;opacity:0.025;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+/* F1 Car SVG animated */
+.hero-car{
+  position:absolute;bottom:100px;right:-360px;width:340px;
+  animation:carentry 8s ease-in-out 1.5s forwards;
+  filter:drop-shadow(0 4px 30px rgba(225,6,0,0.4));
+  z-index:1;
+}
+@keyframes carentry{
+  0%{right:-360px;opacity:0;}
+  15%{opacity:1;}
+  45%{right:60px;}
+  65%{right:60px;}
+  85%{right:-360px;opacity:1;}
+  100%{right:-360px;opacity:0;}
+}
+.track-floor{
+  position:absolute;bottom:70px;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,transparent 0%,#1a1a1a 20%,#2a2a2a 50%,#1a1a1a 80%,transparent 100%);
+}
+.track-dash{
+  position:absolute;bottom:72px;left:0;right:0;height:2px;overflow:hidden;
+}
+.track-dash::after{
+  content:'';display:block;height:100%;
+  background:repeating-linear-gradient(90deg,transparent 0,transparent 30px,rgba(225,6,0,0.4) 30px,rgba(225,6,0,0.4) 50px);
+  animation:trackscroll 1.5s linear infinite;
+}
+@keyframes trackscroll{from{transform:translateX(0);}to{transform:translateX(-80px);}}
+.hero-content{position:relative;z-index:2;max-width:680px;}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:10px;margin-bottom:28px;
+  font-family:'Share Tech Mono',monospace;font-size:0.7rem;letter-spacing:4px;
+  color:var(--red);text-transform:uppercase;
+}
+.hero-tag::before{content:'';width:8px;height:8px;background:var(--red);border-radius:50%;animation:pulse 1.4s ease infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(0.7);}}
+.hero-name{
+  font-family:'Orbitron',sans-serif;font-weight:900;
+  font-size:clamp(2.2rem,5.5vw,4.6rem);line-height:1;letter-spacing:-1px;
+  margin-bottom:16px;
+}
+.hero-name .fn{display:block;color:var(--white);}
+.hero-name .ln{display:block;color:var(--red);}
+.hero-title{
+  font-size:clamp(0.9rem,2vw,1.2rem);letter-spacing:5px;text-transform:uppercase;
+  color:#777;margin-bottom:36px;font-weight:500;
+}
+.hero-stats{display:flex;flex-wrap:wrap;gap:0;margin-bottom:40px;border:1px solid var(--border);}
+.hstat{
+  padding:14px 22px;border-right:1px solid var(--border);
+  display:flex;flex-direction:column;gap:4px;
+}
+.hstat:last-child{border-right:none;}
+.hstat-l{font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:3px;color:#444;text-transform:uppercase;}
+.hstat-v{font-family:'Orbitron',sans-serif;font-size:0.85rem;font-weight:600;color:var(--white);}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;}
+.btn-r{
+  font-family:'Orbitron',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;padding:13px 28px;background:var(--red);color:#fff;
+  border:none;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+  clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
+  transition:all 0.2s;
+}
+.btn-r:hover{background:#ff2020;transform:translateY(-2px);}
+.btn-g{
+  font-family:'Orbitron',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;padding:13px 28px;background:transparent;color:#aaa;
+  border:1px solid #333;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+  clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
+  transition:all 0.2s;
+}
+.btn-g:hover{border-color:var(--red);color:var(--red);}
+
+/* MARQUEE */
+.mq-wrap{background:var(--red);padding:10px 0;overflow:hidden;white-space:nowrap;}
+.mq-inner{display:inline-flex;gap:50px;animation:mq 22s linear infinite;}
+.mq-inner span{font-family:'Orbitron',sans-serif;font-size:0.6rem;letter-spacing:5px;text-transform:uppercase;color:rgba(255,255,255,0.8);}
+@keyframes mq{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* SECTIONS */
+section{padding:100px 60px;position:relative;}
+.sh{display:flex;align-items:center;gap:18px;margin-bottom:60px;}
+.snum{font-family:'Orbitron',sans-serif;font-size:0.65rem;letter-spacing:4px;color:var(--red);}
+.stitle{font-family:'Orbitron',sans-serif;font-size:clamp(1.3rem,2.5vw,2rem);font-weight:700;letter-spacing:2px;text-transform:uppercase;}
+.sline{flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent);}
+.flag-deco{width:36px;height:26px;background:repeating-conic-gradient(#fff 0% 25%,#000 0% 50%) 0 0/9px 9px;animation:flagwave 2s ease-in-out infinite;transform-origin:left center;}
+@keyframes flagwave{0%,100%{transform:skewX(0deg);}30%{transform:skewX(-6deg);}70%{transform:skewX(6deg);}}
+
+/* ABOUT */
+#about{background:var(--dark);}
+.about-g{display:grid;grid-template-columns:1.3fr 1fr;gap:60px;align-items:start;}
+.about-bio{font-size:1.05rem;line-height:1.9;color:#aaa;}
+.about-bio strong{color:var(--white);font-weight:600;}
+.dstats{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.dstat{
+  background:var(--black);border:1px solid var(--border);border-left:3px solid var(--red);
+  padding:18px;clip-path:polygon(0 0,calc(100% - 7px) 0,100% 7px,100% 100%,0 100%);
+}
+.dl{font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:3px;text-transform:uppercase;color:#444;margin-bottom:6px;}
+.dv{font-family:'Orbitron',sans-serif;font-size:0.9rem;font-weight:600;color:var(--white);}
+.langs{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;}
+.lang{
+  font-family:'Rajdhani',sans-serif;font-weight:600;font-size:0.8rem;letter-spacing:2px;
+  text-transform:uppercase;padding:7px 16px;border:1px solid #333;color:#888;
+  clip-path:polygon(0 0,calc(100% - 5px) 0,100% 5px,100% 100%,5px 100%,0 calc(100% - 5px));
+}
+.lang.hi{border-color:rgba(225,6,0,0.5);color:#ddd;}
+
+/* TIMELINE */
+#experience{background:var(--black);}
+.tl{position:relative;padding-left:56px;}
+.tl-track{
+  position:absolute;left:18px;top:8px;bottom:0;width:3px;
+  background:linear-gradient(180deg,var(--red) 0%,#2a2a2a 100%);
+}
+.ti{position:relative;margin-bottom:40px;opacity:0;transform:translateX(-24px);transition:all 0.6s ease;}
+.ti.vis{opacity:1;transform:translateX(0);}
+.tdot{
+  position:absolute;left:-46px;top:22px;width:18px;height:18px;
+  background:var(--black);border:3px solid var(--red);border-radius:50%;z-index:1;
+}
+.tdot::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:6px;height:6px;background:var(--red);border-radius:50%;}
+.tc{
+  background:var(--card);border:1px solid var(--border);border-left:3px solid var(--red);
+  padding:26px;
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
+  transition:border-left-color 0.3s;
+}
+.tc:hover{border-left-color:#ff4444;}
+.tc-h{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;flex-wrap:wrap;gap:10px;}
+.tc-role{font-family:'Orbitron',sans-serif;font-size:0.85rem;font-weight:700;color:var(--white);letter-spacing:1px;}
+.tc-co{font-size:0.95rem;font-weight:600;color:var(--red);margin-top:5px;}
+.tc-date{font-family:'Share Tech Mono',monospace;font-size:0.7rem;color:#555;padding:4px 12px;border:1px solid #2a2a2a;white-space:nowrap;}
+.tc ul{list-style:none;padding:0;margin-top:10px;}
+.tc ul li{position:relative;padding-left:18px;margin-bottom:7px;font-size:0.88rem;color:#888;line-height:1.6;}
+.tc ul li::before{content:'▶';position:absolute;left:0;color:var(--red);font-size:0.55rem;top:5px;}
+
+/* EDUCATION */
+#education{background:var(--dark);}
+.edu-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;}
+.ec{
+  background:var(--black);border:1px solid var(--border);padding:26px;position:relative;
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
+  opacity:0;transform:translateY(20px);transition:all 0.5s ease;
+}
+.ec.vis{opacity:1;transform:translateY(0);}
+.ec::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--red),transparent);}
+.ec-deg{font-family:'Orbitron',sans-serif;font-size:0.8rem;font-weight:700;color:var(--white);margin-bottom:8px;letter-spacing:1px;}
+.ec-school{font-size:0.88rem;color:var(--red);margin-bottom:14px;}
+.ec-meta{display:flex;justify-content:space-between;align-items:center;}
+.ec-date{font-family:'Share Tech Mono',monospace;font-size:0.68rem;color:#555;}
+.ec-grade{font-family:'Orbitron',sans-serif;font-size:0.85rem;font-weight:700;color:var(--gold);}
+
+/* TELEMETRY SKILLS */
+#skills{background:var(--black);}
+.tele-hdr{
+  background:var(--card);border:1px solid var(--border);border-bottom:2px solid var(--red);
+  padding:12px 20px;display:flex;justify-content:space-between;align-items:center;margin-bottom:36px;
+}
+.tele-title{font-family:'Orbitron',sans-serif;font-size:0.68rem;letter-spacing:4px;color:var(--red);text-transform:uppercase;}
+.tele-st{display:flex;align-items:center;gap:8px;font-family:'Share Tech Mono',monospace;font-size:0.68rem;color:var(--green);}
+.tele-st::before{content:'';width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse 1.2s ease infinite;}
+.skills-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:28px;}
+.skcat{background:var(--card);border:1px solid var(--border);border-top:3px solid var(--red);padding:26px;}
+.skcat-t{font-family:'Orbitron',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--red);margin-bottom:22px;}
+.sb{margin-bottom:18px;}
+.sb-h{display:flex;justify-content:space-between;margin-bottom:7px;}
+.sb-n{font-family:'Rajdhani',sans-serif;font-weight:600;font-size:0.9rem;letter-spacing:2px;text-transform:uppercase;}
+.sb-p{font-family:'Share Tech Mono',monospace;font-size:0.75rem;color:var(--red);}
+.sb-track{height:5px;background:#1a1a1a;overflow:hidden;position:relative;}
+.sb-fill{height:100%;background:linear-gradient(90deg,var(--red),#ff6666);width:0;transition:width 1.6s cubic-bezier(0.25,0.46,0.45,0.94);position:relative;}
+.sb-fill::after{content:'';position:absolute;right:-1px;top:-3px;width:11px;height:11px;background:#fff;border-radius:50%;box-shadow:0 0 8px var(--red);}
+
+/* PROJECTS */
+#projects{background:var(--dark);}
+.proj-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:28px;}
+.pc{
+  background:var(--card);border:1px solid var(--border);overflow:hidden;
+  clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px));
+  transition:transform 0.3s;opacity:0;transform:translateY(24px);transition:all 0.5s ease;
+}
+.pc.vis{opacity:1;transform:translateY(0);}
+.pc:hover{transform:translateY(-6px) !important;}
+.pc-top{background:linear-gradient(135deg,#1a0000,#0d0000);padding:18px 22px;border-bottom:1px solid rgba(225,6,0,0.2);display:flex;justify-content:space-between;align-items:center;}
+.pc-tag{font-family:'Share Tech Mono',monospace;font-size:0.62rem;letter-spacing:2px;color:rgba(225,6,0,0.8);text-transform:uppercase;}
+.pc-ico{font-size:1.8rem;}
+.pc-body{padding:22px;}
+.pc-name{font-family:'Orbitron',sans-serif;font-size:0.85rem;font-weight:700;color:var(--white);letter-spacing:1px;margin-bottom:10px;}
+.pc-desc{font-size:0.88rem;color:#777;line-height:1.7;margin-bottom:14px;}
+.pc-tags{display:flex;flex-wrap:wrap;gap:7px;}
+.pt{font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--red);background:rgba(225,6,0,0.08);border:1px solid rgba(225,6,0,0.2);padding:3px 10px;}
+
+/* ACHIEVEMENTS */
+#achievements{background:var(--black);}
+.podium-w{display:flex;justify-content:center;align-items:flex-end;gap:6px;margin-bottom:60px;height:180px;}
+.pod{
+  width:150px;background:linear-gradient(180deg,#161616,#0d0d0d);
+  border:1px solid #2a2a2a;border-top:3px solid;
+  display:flex;flex-direction:column;align-items:center;padding-top:14px;gap:6px;
+  opacity:0;transform:translateY(20px);transition:all 0.6s ease;
+}
+.pod.vis{opacity:1;transform:translateY(0);}
+.pod.p1{height:168px;border-top-color:var(--gold);}
+.pod.p2{height:132px;border-top-color:var(--silver);}
+.pod.p3{height:96px;border-top-color:#CD7F32;}
+.pod-pos{font-family:'Orbitron',sans-serif;font-size:1.8rem;font-weight:900;}
+.p1 .pod-pos{color:var(--gold);}
+.p2 .pod-pos{color:var(--silver);}
+.p3 .pod-pos{color:#CD7F32;}
+.pod-txt{font-family:'Rajdhani',sans-serif;font-size:0.7rem;font-weight:600;letter-spacing:1px;text-align:center;color:#ccc;padding:0 8px;}
+.ach-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;}
+.ach-item{
+  display:flex;align-items:flex-start;gap:14px;background:var(--card);border:1px solid var(--border);padding:18px;
+  clip-path:polygon(0 0,calc(100% - 7px) 0,100% 7px,100% 100%,0 100%);
+  opacity:0;transform:translateX(-16px);transition:all 0.5s ease;
+}
+.ach-item.vis{opacity:1;transform:translateX(0);}
+.ach-ico{font-size:1.6rem;flex-shrink:0;}
+.ach-t{font-size:0.88rem;color:#888;line-height:1.5;}
+.ach-t strong{display:block;color:var(--white);font-weight:600;margin-bottom:4px;font-size:0.9rem;}
+
+/* CERTIFICATIONS */
+#certs{background:var(--dark);}
+.certs-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;}
+.cert{
+  background:var(--black);border:1px solid var(--border);border-left:3px solid var(--red);
+  padding:14px 18px;display:flex;align-items:center;gap:12px;
+  opacity:0;transition:all 0.4s ease;
+}
+.cert.vis{opacity:1;}
+.cert-ico{font-size:1.4rem;flex-shrink:0;}
+.cert-n{font-size:0.82rem;color:#ccc;line-height:1.4;}
+
+/* CONTACT */
+#contact{background:var(--black);}
+.contact-g{display:grid;grid-template-columns:1fr 1fr;gap:50px;}
+.contact-items{display:flex;flex-direction:column;gap:16px;}
+.ci{
+  display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--border);padding:18px 22px;
+  clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
+  opacity:0;transform:translateX(-20px);transition:all 0.5s ease;
+}
+.ci.vis{opacity:1;transform:translateX(0);}
+.ci-ico{font-size:1.4rem;color:var(--red);}
+.ci-l{font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:3px;color:#444;text-transform:uppercase;margin-bottom:4px;}
+.ci-v{font-family:'Rajdhani',sans-serif;font-size:0.95rem;font-weight:600;color:var(--white);}
+.social-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;}
+.soc{
+  font-family:'Orbitron',sans-serif;font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;
+  padding:11px 22px;background:var(--card);color:#aaa;border:1px solid #2a2a2a;text-decoration:none;
+  clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));
+  transition:all 0.2s;
+}
+.soc:hover{border-color:var(--red);color:var(--red);}
+.status-panel{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--red);padding:26px;}
+.sp-t{font-family:'Orbitron',sans-serif;font-size:0.62rem;letter-spacing:4px;color:var(--red);text-transform:uppercase;margin-bottom:18px;}
+.sp-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-family:'Rajdhani',sans-serif;font-size:0.92rem;}
+.sp-row:last-child{border-bottom:none;}
+.sp-k{color:#555;}
+.sp-v{color:var(--white);font-weight:600;}
+.sp-v.green{color:var(--green);}
+.sp-v.red{color:var(--red);}
+
+/* FOOTER */
+footer{background:#000;border-top:1px solid #111;padding:36px 60px;}
+.chk{height:4px;background:repeating-linear-gradient(90deg,#fff 0,#fff 8px,#000 8px,#000 16px);margin-bottom:28px;}
+.ft-in{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+.ft-logo{font-family:'Orbitron',sans-serif;font-size:0.85rem;font-weight:900;letter-spacing:3px;color:#333;}
+.ft-logo em{color:var(--red);font-style:normal;}
+.ft-copy{font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:#2a2a2a;}
+
+/* TIRE MARKS */
+.tire-marks{
+  position:absolute;bottom:0;left:0;right:0;height:60px;overflow:hidden;pointer-events:none;opacity:0.06;
+}
+.tm-line{position:absolute;bottom:0;height:40px;width:60px;border-left:8px solid #fff;border-right:8px solid #fff;transform:skewX(-15deg);}
+
+/* REVEAL utility */
+.rv{opacity:0;transform:translateY(28px);transition:all 0.7s ease;}
+.rv.vis{opacity:1;transform:translateY(0);}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  section{padding:80px 24px;}
+  nav{padding:0 20px;}
+  .nav-links{display:none;}
+  #hero{padding:80px 24px 60px;}
+  .hero-stats{flex-direction:column;}
+  .hstat{border-right:none;border-bottom:1px solid var(--border);}
+  .about-g{grid-template-columns:1fr;}
+  .contact-g{grid-template-columns:1fr;}
+  .podium-w{height:140px;}
+  .pod{width:110px;}
+  .pod.p1{height:128px;}
+  .pod.p2{height:100px;}
+  .pod.p3{height:72px;}
+  footer{padding:36px 24px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== INTRO LIGHTS ==================== -->
+<div id="intro">
+  <div class="intro-ambient"></div>
+  <div class="intro-scan"></div>
+
+  <div class="intro-brand">SAMIKSHA SONAWANE · PORTFOLIO</div>
+
+  <div class="gantry">
+    <div class="gantry-top">
+      <div class="gantry-pole"></div>
+      <div style="flex:1;"></div>
+      <div class="gantry-pole"></div>
+    </div>
+    <div class="gantry-beam"></div>
+    <div class="lights-row">
+      <div class="light" id="l1"></div>
+      <div class="light" id="l2"></div>
+      <div class="light" id="l3"></div>
+      <div class="light" id="l4"></div>
+      <div class="light" id="l5"></div>
+    </div>
+  </div>
+
+  <div id="go">LIGHTS OUT!</div>
+  <div class="intro-sub">INITIALIZING PORTFOLIO <span>_</span></div>
+</div>
+
+<!-- ==================== MAIN ==================== -->
+<div id="main" class="hidden">
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">SS<em>·</em>26</div>
+    <ul class="nav-links">
+      <li><a href="#about">Driver</a></li>
+      <li><a href="#experience">Race Log</a></li>
+      <li><a href="#education">Academy</a></li>
+      <li><a href="#skills">Telemetry</a></li>
+      <li><a href="#projects">Pit Stops</a></li>
+      <li><a href="#achievements">Podium</a></li>
+      <li><a href="#contact">Radio</a></li>
+    </ul>
+    <a href="Samiksha_Sonawane_CV_2025.pdf" download class="nav-dl">↓ Resume</a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-noise"></div>
+    <div class="hero-stripe"></div>
+    <div class="hero-stripe2"></div>
+    <div class="track-floor"></div>
+    <div class="track-dash"></div>
+
+    <!-- F1 Car SVG -->
+    <div class="hero-car">
+      <svg viewBox="0 0 340 95" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Rear wing vertical plates -->
+        <rect x="10" y="18" width="5" height="28" fill="#1a1a1a"/>
+        <rect x="28" y="18" width="5" height="28" fill="#1a1a1a"/>
+        <!-- Rear wing -->
+        <rect x="6" y="15" width="32" height="7" rx="1" fill="#CC0000"/>
+        <rect x="8" y="22" width="28" height="3" rx="0" fill="#E10600" opacity="0.7"/>
+        <!-- Main body -->
+        <path d="M38 52 L62 32 L95 24 L180 20 L250 22 L300 28 L318 38 L320 52 L318 62 L300 68 L250 70 L180 68 L95 66 L62 60 Z" fill="#E10600"/>
+        <!-- Body accent lines -->
+        <path d="M95 24 L95 66" stroke="#CC0000" stroke-width="1" opacity="0.5"/>
+        <path d="M180 20 L180 68" stroke="#CC0000" stroke-width="1" opacity="0.5"/>
+        <!-- Sidepods -->
+        <path d="M100 40 L240 38 L240 58 L100 60 Z" fill="#CC0000"/>
+        <path d="M100 44 L240 42 L240 44 L100 46 Z" fill="#fff" opacity="0.15"/>
+        <!-- Cockpit surround -->
+        <path d="M130 24 L145 10 L195 9 L210 24" fill="#b80000"/>
+        <!-- Cockpit opening -->
+        <path d="M138 23 L150 12 L190 11 L202 23" fill="#0a0a0a"/>
+        <!-- Halo -->
+        <path d="M148 14 L190 13" stroke="#888" stroke-width="4" stroke-linecap="round"/>
+        <rect x="165" y="11" width="5" height="6" rx="1" fill="#777"/>
+        <!-- Front wing -->
+        <path d="M298 50 L330 44 L334 52 L330 60 L298 58 Z" fill="#CC0000"/>
+        <path d="M298 48 L332 41 L334 43 L302 48 Z" fill="#b80000"/>
+        <!-- Nose -->
+        <path d="M310 46 L336 50 L310 54 Z" fill="#aa0000"/>
+        <!-- Driver number plate -->
+        <rect x="150" y="28" width="50" height="26" rx="2" fill="#fff" opacity="0.12"/>
+        <text x="175" y="46" fill="white" font-size="12" font-weight="900" font-family="Orbitron,sans-serif" text-anchor="middle" letter-spacing="1">SS</text>
+        <!-- Left rear wheel -->
+        <ellipse cx="82" cy="65" rx="18" ry="16" fill="#111"/>
+        <ellipse cx="82" cy="65" rx="11" ry="9" fill="#1d1d1d"/>
+        <ellipse cx="82" cy="65" rx="4" ry="3.5" fill="#333"/>
+        <path d="M82 56 L82 74 M73 65 L91 65" stroke="#444" stroke-width="1.5"/>
+        <!-- Right rear wheel -->
+        <ellipse cx="82" cy="27" rx="18" ry="14" fill="#111"/>
+        <ellipse cx="82" cy="27" rx="11" ry="9" fill="#1d1d1d"/>
+        <ellipse cx="82" cy="27" rx="4" ry="3.5" fill="#333"/>
+        <!-- Left front wheel -->
+        <ellipse cx="272" cy="63" rx="18" ry="16" fill="#111"/>
+        <ellipse cx="272" cy="63" rx="11" ry="9" fill="#1d1d1d"/>
+        <ellipse cx="272" cy="63" rx="4" ry="3.5" fill="#333"/>
+        <!-- Right front wheel -->
+        <ellipse cx="272" cy="29" rx="18" ry="14" fill="#111"/>
+        <ellipse cx="272" cy="29" rx="11" ry="9" fill="#1d1d1d"/>
+        <ellipse cx="272" cy="29" rx="4" ry="3.5" fill="#333"/>
+        <!-- Front wing supports -->
+        <rect x="268" y="38" width="5" height="22" fill="#aaa" opacity="0.6"/>
+        <!-- Exhaust glow -->
+        <ellipse cx="34" cy="48" rx="10" ry="5" fill="#FF6600" opacity="0.7"/>
+        <ellipse cx="22" cy="48" rx="8" ry="4" fill="#FF8800" opacity="0.4"/>
+        <ellipse cx="12" cy="48" rx="6" ry="3" fill="#FFAA00" opacity="0.2"/>
+        <!-- Sponsor stripe -->
+        <path d="M110 43 L240 41 L240 43 L110 45 Z" fill="#fff" opacity="0.2"/>
+        <path d="M110 52 L240 50 L240 52 L110 54 Z" fill="#fff" opacity="0.1"/>
+      </svg>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-tag">🏎 Driver Profile · Purdue MEM · Fall 2026</div>
+      <h1 class="hero-name">
+        <span class="fn">SAMIKSHA</span>
+        <span class="ln">SONAWANE</span>
+      </h1>
+      <p class="hero-title">Mechanical Engineer · Technical Consultant · Engineering Manager</p>
+
+      <div class="hero-stats">
+        <div class="hstat">
+          <div class="hstat-l">Current Team</div>
+          <div class="hstat-v">Dassault Systèmes</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat-l">CGPA</div>
+          <div class="hstat-v">9.2 / 10</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat-l">IELTS</div>
+          <div class="hstat-v">Band 7</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat-l">Next Race</div>
+          <div class="hstat-v" style="color:var(--red);">Purdue 2026</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat-l">Experience</div>
+          <div class="hstat-v">2+ Years</div>
+        </div>
+      </div>
+
+      <div class="hero-cta" style="margin-top:32px;">
+        <a href="#experience" class="btn-r">🏁 Race Log</a>
+        <a href="#contact" class="btn-g">📡 Team Radio</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="mq-wrap">
+    <div class="mq-inner">
+      <span>🏎 Dassault Systèmes</span><span>🎓 Purdue University · MEM Fall 2026</span>
+      <span>⚙️ Mechanical Engineering</span><span>🔬 MBSE & Digital Twin</span>
+      <span>🏆 Formula Student Austria 2022</span><span>🤖 Machine Learning</span>
+      <span>📊 Data Analytics</span><span>💡 Engineering Management</span>
+      <span>🏎 Dassault Systèmes</span><span>🎓 Purdue University · MEM Fall 2026</span>
+      <span>⚙️ Mechanical Engineering</span><span>🔬 MBSE & Digital Twin</span>
+      <span>🏆 Formula Student Austria 2022</span><span>🤖 Machine Learning</span>
+      <span>📊 Data Analytics</span><span>💡 Engineering Management</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="sh">
+      <span class="snum">01</span>
+      <h2 class="stitle">Driver Profile</h2>
+      <div class="sline"></div>
+      <div class="flag-deco"></div>
+    </div>
+    <div class="about-g rv">
+      <div>
+        <p class="about-bio">
+          Enthusiastic and driven <strong>Mechanical Engineer</strong> with a strong technical foundation,
+          skilled in bridging engineering and IT through <strong>data analytics, system modeling, and strategic development</strong>.
+          Experienced in technical consultancy, PLM, and R&D — focused on sustainable systems and process optimization.
+        </p>
+        <br>
+        <p class="about-bio">
+          Currently competing as an <strong>Industry Solutions Technical Consultant at Dassault Systèmes</strong>,
+          working in Transportation & Mobility, delivering end-to-end customer solutions using the <strong>3DExperience platform</strong>.
+          Expert in CATIA, DELMIA, ENOVIA, SIMULIA, and MBSE methodologies.
+        </p>
+        <br>
+        <p class="about-bio">
+          Admitted to <strong>Purdue University — Master of Engineering Management (Fall 2026)</strong>.
+          Preparing to shift gears into product management, engineering leadership, and digital transformation strategy.
+          Passionate about community leadership, debating, and motorsport.
+        </p>
+        <div class="langs">
+          <div class="lang hi">🇬🇧 English (IELTS 7)</div>
+          <div class="lang">🇩🇪 German A1</div>
+          <div class="lang hi">🇮🇳 Marathi</div>
+          <div class="lang hi">🇮🇳 Hindi</div>
+        </div>
+      </div>
+      <div class="dstats">
+        <div class="dstat"><div class="dl">Current Role</div><div class="dv" style="font-size:0.75rem;">Industry Solutions Technical Consultant</div></div>
+        <div class="dstat"><div class="dl">Company</div><div class="dv" style="font-size:0.75rem;">Dassault Systèmes</div></div>
+        <div class="dstat"><div class="dl">CGPA</div><div class="dv">9.2 / 10</div></div>
+        <div class="dstat"><div class="dl">Internships</div><div class="dv">6 Roles</div></div>
+        <div class="dstat"><div class="dl">Certifications</div><div class="dv">8 Earned</div></div>
+        <div class="dstat"><div class="dl">Location</div><div class="dv" style="font-size:0.8rem;">Pune, India</div></div>
+        <div class="dstat" style="grid-column:span 2;border-left-color:var(--gold);">
+          <div class="dl" style="color:var(--gold);">Next Destination</div>
+          <div class="dv" style="color:var(--gold);">Purdue University · MEM · Fall 2026</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE RACE LOG -->
+  <section id="experience">
+    <div class="sh">
+      <span class="snum">02</span>
+      <h2 class="stitle">Race Log</h2>
+      <div class="sline"></div>
+    </div>
+    <div class="tl">
+      <div class="tl-track"></div>
+
+      <div class="ti">
+        <div class="tdot"></div>
+        <div class="tc">
+          <div class="tc-h">
+            <div>
+              <div class="tc-role">Industry Solution Technical Consultant</div>
+              <div class="tc-co">🏎 Dassault Systèmes · Pune, India (On-site)</div>
+            </div>
+            <div class="tc-date">JUL 2024 — PRESENT</div>
+          </div>
+          <ul>
+            <li>Working in Transportation &amp; Mobility industry, focusing on train segment — delivering end-to-end customer demos and solutions with ENOVIA, CATIA, DELMIA, SIMULIA, QUINTIQ &amp; NETVIBES</li>
+            <li>Managing requirements, project workflows, verification &amp; validation, system modeling, traceability, model versioning, aftersales and manufacturing processes</li>
+            <li>Designed and simulated digital manufacturing workflows — Digital Twin using DELMIA to optimize factory operations and improve efficiency</li>
+            <li>Customized 3DExperience CATIA modules to automate design processes using Enterprise Knowledge Language (EKL) for automation in CATIA and DELMIA</li>
+            <li>Applied MBSE (Model-Based Systems Engineering) to streamline product lifecycle management for complex engineering systems</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ti">
+        <div class="tdot"></div>
+        <div class="tc">
+          <div class="tc-h">
+            <div>
+              <div class="tc-role">Industry Solutions Technical Consultant — Intern</div>
+              <div class="tc-co">🏎 Dassault Systèmes · Pune, India (On-site)</div>
+            </div>
+            <div class="tc-date">JAN 2024 — JUL 2024</div>
+          </div>
+          <ul>
+            <li>Designed and simulated digital manufacturing workflows — Digital Twin using DELMIA to optimize factory operations</li>
+            <li>Customized 3DExperience CATIA modules integrating industry standards with simulations; used EKL for automation</li>
+            <li>Applied MBSE principles for streamlining product lifecycle management in complex engineering environments</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ti">
+        <div class="tdot"></div>
+        <div class="tc">
+          <div class="tc-h">
+            <div>
+              <div class="tc-role">Research Project Intern</div>
+              <div class="tc-co">⚙️ Kirloskar Pneumatic · Pune, India (Hybrid)</div>
+            </div>
+            <div class="tc-date">JUN 2022 — MAY 2024</div>
+          </div>
+          <ul>
+            <li>Completed research: "Investigating the Impact of Coatings &amp; Alternate Materials for Different Applications of Screw Compressors"</li>
+            <li>Developed a material and coatings decision matrix for screw rotors — achieved <strong style="color:var(--green);">5.01% increase in displacement</strong> and <strong style="color:var(--green);">6.1% improvement in efficiency</strong></li>
+            <li>Investigated alternative rotor materials, assessing structural, thermal, and corrosion resistance properties for industrial applications</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ti">
+        <div class="tdot"></div>
+        <div class="tc">
+          <div class="tc-h">
+            <div>
+              <div class="tc-role">Strategy &amp; Business Management Intern</div>
+              <div class="tc-co">📊 ADM Group India · Pune, India (On-site)</div>
+            </div>
+            <div class="tc-date">JUN 2023 — NOV 2023</div>
+          </div>
+          <ul>
+            <li>Conducted data analysis to assess market trends and inventory dynamics, optimizing procurement and sourcing strategies</li>
+            <li>Maintained an Excel-based dashboard with macros and pivot tables for financial tracking and inventory control</li>
+            <li>Participated in weekly strategy meetings providing updates on procurement, sourcing, accounts, and IT-related developments</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ti">
+        <div class="tdot"></div>
+        <div class="tc">
+          <div class="tc-h">
+            <div>
+              <div class="tc-role">Pressure Drop Calculator — Project Intern</div>
+              <div class="tc-co">🔬 Atlas Copco GECIA · Pune, India (Hybrid)</div>
+            </div>
+            <div class="tc-date">JAN 2023 — JUN 2023</div>
+          </div>
+          <ul>
+            <li>Analyzed pressure drop in single-phase (air, gas, water) flows; solved and compared numerical results with CFD simulations for various pipe fittings</li>
+            <li>Developed a Python script for a calculator GUI to compute flow losses in pipes, elbows, valves, nozzles, and splitters</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ti">
+        <div class="tdot"></div>
+        <div class="tc">
+          <div class="tc-h">
+            <div>
+              <div class="tc-role">Research Engineer Intern</div>
+              <div class="tc-co">🔩 SBEM-India · Pune, India (Hybrid)</div>
+            </div>
+            <div class="tc-date">JAN 2023 — JUN 2023</div>
+          </div>
+          <ul>
+            <li>Designed and simulated water flow on SolidWorks and ANSYS to enhance flow meter accuracy and performance</li>
+            <li>Applied reverse engineering to analyze pressure conditions and flow rates; evaluated metrological features against industry standards</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ti">
+        <div class="tdot"></div>
+        <div class="tc">
+          <div class="tc-h">
+            <div>
+              <div class="tc-role">Development Intern</div>
+              <div class="tc-co">🤝 Support &amp; Care Humanity Foundation · Pune (Hybrid)</div>
+            </div>
+            <div class="tc-date">APR 2022 — JAN 2023</div>
+          </div>
+          <ul>
+            <li>Assisted in strategy development and optimization of business models for the humanitarian foundation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="sh">
+      <span class="snum">03</span>
+      <h2 class="stitle">Academy Records</h2>
+      <div class="sline"></div>
+    </div>
+    <div class="edu-g">
+      <div class="ec" style="border-top:none;background:linear-gradient(135deg,#0d0d00,var(--black));" data-delay="0">
+        <div style="position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--gold),transparent);"></div>
+        <div style="font-family:'Share Tech Mono',monospace;font-size:0.58rem;letter-spacing:3px;color:var(--gold);margin-bottom:10px;">🏆 UPCOMING RACE</div>
+        <div class="ec-deg">Master of Engineering Management</div>
+        <div class="ec-school" style="color:var(--gold);">Purdue University, West Lafayette, USA</div>
+        <div class="ec-meta">
+          <div class="ec-date">FALL 2026</div>
+          <div class="ec-grade" style="font-size:0.8rem;">ADMITTED ✓</div>
+        </div>
+      </div>
+      <div class="ec" data-delay="100">
+        <div class="ec-deg">Bachelor of Technology — Mechanical Engineering</div>
+        <div class="ec-school">Vishwakarma Institute of Information Technology, Pune</div>
+        <div class="ec-meta">
+          <div class="ec-date">JAN 2021 — MAY 2024</div>
+          <div class="ec-grade">9.2 / 10</div>
+        </div>
+      </div>
+      <div class="ec" data-delay="200">
+        <div class="ec-deg">Higher Secondary Certificate (HSC)</div>
+        <div class="ec-school">Maharashtra State Board of Secondary &amp; Higher Secondary Education</div>
+        <div class="ec-meta">
+          <div class="ec-date">MAR 2020</div>
+          <div class="ec-grade">64.31%</div>
+        </div>
+      </div>
+      <div class="ec" data-delay="300">
+        <div class="ec-deg">Secondary School Certificate (SSC)</div>
+        <div class="ec-school">Maharashtra State Board of Secondary &amp; Higher Secondary Education</div>
+        <div class="ec-meta">
+          <div class="ec-date">MAR 2018</div>
+          <div class="ec-grade">91.00%</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS TELEMETRY -->
+  <section id="skills">
+    <div class="sh">
+      <span class="snum">04</span>
+      <h2 class="stitle">Car Telemetry</h2>
+      <div class="sline"></div>
+    </div>
+    <div class="tele-hdr">
+      <div class="tele-title">🖥 Live Performance Dashboard · Driver: S. Sonawane · Car #SS26</div>
+      <div class="tele-st">ALL SYSTEMS NOMINAL</div>
+    </div>
+    <div class="skills-g rv">
+      <div class="skcat">
+        <div class="skcat-t">⚙️ CAD / CAM / Simulation</div>
+        <div class="sb"><div class="sb-h"><span class="sb-n">CATIA</span><span class="sb-p">95%</span></div><div class="sb-track"><div class="sb-fill" data-w="95"></div></div></div>
+        <div class="sb"><div class="sb-h"><span class="sb-n">DELMIA</span><span class="sb-p">92%</span></div><div class="sb-track"><div class="sb-fill" data-w="92"></div></div></div>
+        <div class="sb"><div class="sb-h"><span class="sb-n">SolidWorks</span><span class="sb-p">85%</span></div><div class="sb-track"><div class="sb-fill" data-w="85"></div></div></div>
+        <div class="sb"><div class="sb-h"><span class="sb-n">ANSYS / Simulia</span><span class="sb-p">80%</span></div><div class="sb-track"><div class="sb-fill" data-w="80"></div></div></div>
+      </div>
+      <div class="skcat">
+        <div class="skcat-t">💻 Programming &amp; Scripting</div>
+        <div class="sb"><div class="sb-h"><span class="sb-n">EKL (Dassault)</span><span class="sb-p">90%</span></div><div class="sb-track"><div class="sb-fill" data-w="90"></div></div></div>
+        <div class="sb"><div class="sb-h"><span class="sb-n">Python</span><span class="sb-p">85%</span></div><div class="sb-track"><div class="sb-fill" data-w="85"></div></div></div>
+        <div class="sb"><div class="sb-h"><span class="sb-n">MATLAB</span><span class="sb-p">75%</span></div><div class="sb-track"><div class="sb-fill" data-w="75"></div></div></div>
+        <div class="sb"><div class="sb-h"><span class="sb-n">C++</span><span class="sb-p">70%</span></div><div class="sb-track"><div class="sb-fill" data-w="70"></div></div></div>
+      </div>
+      <div class="skcat">
+        <div class="skcat-t">📊 Data &amp; Analytics</div>
+        <div class="sb"><div class="sb-h"><span class="sb-n">Excel (Macros/Pivot)</span><span class="sb-p">90%</span></div><div class="sb-track"><div class="sb-fill" data-w="90"></div></div></div>
+        <div class="sb"><div class="sb-h"><span class="sb-n">Netvibes</span><span class="sb-p">88%</span></div><div class="sb-track"><div class="sb-fill" data-w="88"></div></div></div>
+        <div class="sb"><div class="sb-h"><span class="sb-n">Tableau</span><span class="sb-p">80%</span></div><div class="sb-track"><div class="sb-fill" data-w="80"></div></div></div>
+        <div class="sb"><div class="sb-h"><span class="sb-n">Power BI</span><span class="sb-p">75%</span></div><div class="sb-track"><div class="sb-fill" data-w="75"></div></div></div>
+      </div>
+      <div class="skcat">
+        <div class="skcat-t">🔬 PLM &amp; Systems Eng.</div>
+        <div class="sb"><div class="sb-h"><span class="sb-n">ENOVIA</span><span class="sb-p">92%</span></div><div class="sb-track"><div class="sb-fill" data-w="92"></div></div></div>
+        <div class="sb"><div class="sb-h"><span class="sb-n">MBSE</span><span class="sb-p">90%</span></div><div class="sb-track"><div class="sb-fill" data-w="90"></div></div></div>
+        <div class="sb"><div class="sb-h"><span class="sb-n">Digital Twin</span><span class="sb-p">87%</span></div><div class="sb-track"><div class="sb-fill" data-w="87"></div></div></div>
+        <div class="sb"><div class="sb-h"><span class="sb-n">Machine Learning</span><span class="sb-p">75%</span></div><div class="sb-track"><div class="sb-fill" data-w="75"></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS PIT STOPS -->
+  <section id="projects">
+    <div class="sh">
+      <span class="snum">05</span>
+      <h2 class="stitle">Pit Stop Projects</h2>
+      <div class="sline"></div>
+    </div>
+    <div class="proj-g">
+      <div class="pc">
+        <div class="pc-top"><span class="pc-tag">🤖 Machine Learning · Oct–Dec 2022</span><span class="pc-ico">📊</span></div>
+        <div class="pc-body">
+          <div class="pc-name">Crime Data Analysis — Machine Learning</div>
+          <div class="pc-desc">Developed an ML model in Python to analyze and predict crime trends across India. Implemented data preprocessing and exploratory analysis to identify significant patterns. Deployed as an interactive real-time visualization dashboard.</div>
+          <div class="pc-tags"><span class="pt">Python</span><span class="pt">Machine Learning</span><span class="pt">Data Viz</span><span class="pt">Dashboard</span></div>
+        </div>
+      </div>
+      <div class="pc">
+        <div class="pc-top"><span class="pc-tag">🏭 Digital Manufacturing · Jan–Jul 2024</span><span class="pc-ico">⚙️</span></div>
+        <div class="pc-body">
+          <div class="pc-name">Engine Assembly Line — DELMIA, EKL &amp; Dymola</div>
+          <div class="pc-desc">Designed and simulated a virtual engine assembly factory using DELMIA. Customized and automated MBOM and process plan naming using EKL scripting. Integrated Dymola for system-level analysis of the entire engine assembly process.</div>
+          <div class="pc-tags"><span class="pt">DELMIA</span><span class="pt">EKL</span><span class="pt">Dymola</span><span class="pt">Digital Twin</span><span class="pt">MBSE</span></div>
+        </div>
+      </div>
+      <div class="pc">
+        <div class="pc-top"><span class="pc-tag">🔩 Materials R&amp;D · Jun 2022–May 2024</span><span class="pc-ico">🔬</span></div>
+        <div class="pc-body">
+          <div class="pc-name">Screw Compressor — Coatings &amp; Alternate Materials</div>
+          <div class="pc-desc">Developed a material and coatings decision matrix for screw rotors achieving 5.01% displacement increase and 6.1% efficiency improvement. Investigated structural, thermal, and corrosion resistance properties for industrial applications.</div>
+          <div class="pc-tags"><span class="pt">Materials Science</span><span class="pt">FEA</span><span class="pt">CFD</span><span class="pt">R&amp;D</span></div>
+        </div>
+      </div>
+      <div class="pc">
+        <div class="pc-top"><span class="pc-tag">💧 Fluid Dynamics · Jan–Jun 2023</span><span class="pc-ico">💻</span></div>
+        <div class="pc-body">
+          <div class="pc-name">Pressure Drop Calculator — Atlas Copco GECIA</div>
+          <div class="pc-desc">Analyzed pressure drop in single-phase flows (air, gas, water). Solved and compared numerical results with CFD simulations for pipe fittings. Built a Python GUI calculator to compute flow losses across pipes, elbows, valves, nozzles, and splitters.</div>
+          <div class="pc-tags"><span class="pt">Python</span><span class="pt">CFD</span><span class="pt">GUI Dev</span><span class="pt">Fluid Dynamics</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACHIEVEMENTS PODIUM -->
+  <section id="achievements">
+    <div class="sh">
+      <span class="snum">06</span>
+      <h2 class="stitle">Podium Finishes</h2>
+      <div class="sline"></div>
+    </div>
+    <div class="podium-w">
+      <div class="pod p2"><div class="pod-pos">2</div><div class="pod-txt">Formula Student Austria 2022 — Combustion</div></div>
+      <div class="pod p1"><div class="pod-pos">1</div><div class="pod-txt">Team Manager — Vishwaracers Electric</div></div>
+      <div class="pod p3"><div class="pod-pos">3</div><div class="pod-txt">VP, Rotaract Club Pune</div></div>
+    </div>
+    <div class="ach-list">
+      <div class="ach-item"><div class="ach-ico">🏁</div><div class="ach-t"><strong>Formula Student Austria 2022 — Spielberg, Austria</strong>Competed in Formula Student Austria onsite event (combustion category). Served as Brakes Lead, Sponsorship Head, Finance &amp; Media Lead for Team Vishwaracers.</div></div>
+      <div class="ach-item"><div class="ach-ico">🏎</div><div class="ach-t"><strong>SAE SUPRA 2023</strong>Participated in SAE SUPRA 2023 and manufactured an in-house hydraulic brake assembly for the Formula Student team.</div></div>
+      <div class="ach-item"><div class="ach-ico">⚡</div><div class="ach-t"><strong>Team Manager — Formula Student Vishwaracers Electric</strong>Led the electric formula student team, overseeing all technical and operational functions across the season.</div></div>
+      <div class="ach-item"><div class="ach-ico">🌾</div><div class="ach-t"><strong>17th Constro International Expo — Pune, 2023</strong>Presented a Rice De-Husking Machine designed in SolidWorks &amp; CATIA with integrated smart sensors and real-time analytics dashboard proposal.</div></div>
+      <div class="ach-item"><div class="ach-ico">🎤</div><div class="ach-t"><strong>Founder — "Agree to Disagree" Debating Club (2021)</strong>Established the debating club, organized multiple workshops. Active member of Toastmasters International.</div></div>
+      <div class="ach-item"><div class="ach-ico">🤝</div><div class="ach-t"><strong>Vice President — Rotaract Club, Pune</strong>Led club initiatives and community-level programs driving leadership, outreach, and meaningful social impact.</div></div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certs">
+    <div class="sh">
+      <span class="snum">07</span>
+      <h2 class="stitle">Race Licenses</h2>
+      <div class="sline"></div>
+    </div>
+    <div class="certs-g">
+      <div class="cert"><div class="cert-ico">📊</div><div class="cert-n">Data Analytics — Coursera</div></div>
+      <div class="cert"><div class="cert-ico">🤖</div><div class="cert-n">Machine Learning Foundations — Great Learning</div></div>
+      <div class="cert"><div class="cert-ico">🌐</div><div class="cert-n">Responsive Web Design — Coursera</div></div>
+      <div class="cert"><div class="cert-ico">💻</div><div class="cert-n">C++, CATIA &amp; Personality Development — IIT Bombay</div></div>
+      <div class="cert"><div class="cert-ico">🎨</div><div class="cert-n">Front-End Development (HTML/CSS)</div></div>
+      <div class="cert"><div class="cert-ico">🔬</div><div class="cert-n">Be a Systems Engineering Leader — Dassault Systèmes</div></div>
+      <div class="cert"><div class="cert-ico">🤝</div><div class="cert-n">Certified Collaborative Industry Innovator — Dassault Systèmes</div></div>
+      <div class="cert"><div class="cert-ico">⚙️</div><div class="cert-n">Dynamic Systems Leader Associate — Dassault Systèmes</div></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="sh">
+      <span class="snum">08</span>
+      <h2 class="stitle">Team Radio</h2>
+      <div class="sline"></div>
+      <div class="flag-deco"></div>
+    </div>
+    <div class="contact-g">
+      <div class="contact-items">
+        <div class="ci"><div class="ci-ico">📧</div><div><div class="ci-l">Email Channel</div><div class="ci-v">samikshasonawane1504@gmail.com</div></div></div>
+        <div class="ci"><div class="ci-ico">📱</div><div><div class="ci-l">Radio Frequency</div><div class="ci-v">+91 9011820673</div></div></div>
+        <div class="ci"><div class="ci-ico">📍</div><div><div class="ci-l">Home Circuit</div><div class="ci-v">Pune, Maharashtra, India</div></div></div>
+        <div class="ci"><div class="ci-ico">🎓</div><div><div class="ci-l">Next Destination</div><div class="ci-v">Purdue University · Fall 2026</div></div></div>
+        <div style="margin-top:8px;">
+          <div style="font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:3px;color:#444;text-transform:uppercase;margin-bottom:14px;">🏁 Connect on the Grid</div>
+          <div class="social-row">
+            <a href="https://linkedin.com/in/samiksha-sonawane" target="_blank" class="soc">💼 LinkedIn</a>
+            <a href="mailto:samikshasonawane1504@gmail.com" class="soc">📧 Email</a>
+            <a href="Samiksha_Sonawane_CV_2025.pdf" download class="soc">📄 Resume</a>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="status-panel">
+          <div class="sp-t">📡 Driver Status Panel</div>
+          <div class="sp-row"><span class="sp-k">Current Status</span><span class="sp-v green">● Open to Opportunities</span></div>
+          <div class="sp-row"><span class="sp-k">Seeking</span><span class="sp-v">Internships · Co-ops</span></div>
+          <div class="sp-row"><span class="sp-k">Target Domains</span><span class="sp-v">Product Mgmt · Eng. Mgmt</span></div>
+          <div class="sp-row"><span class="sp-k">Industry Focus</span><span class="sp-v">Tech · Manufacturing · Consulting</span></div>
+          <div class="sp-row"><span class="sp-k">Available From</span><span class="sp-v red">Summer / Fall 2026</span></div>
+          <div class="sp-row"><span class="sp-k">Location</span><span class="sp-v">West Lafayette, IN (Purdue)</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="chk"></div>
+    <div class="ft-in">
+      <div class="ft-logo">SAMIKSHA <em>SONAWANE</em> · SS26</div>
+      <div class="ft-copy">© 2025 · BUILT WITH PASSION &amp; PRECISION · PURDUE BOUND 🏎</div>
+    </div>
+  </footer>
+
+</div><!-- end #main -->
+
+<script>
+// ============================================================
+// F1 LIGHTS INTRO SEQUENCE
+// ============================================================
+(function() {
+  const lights = [
+    document.getElementById('l1'),
+    document.getElementById('l2'),
+    document.getElementById('l3'),
+    document.getElementById('l4'),
+    document.getElementById('l5')
+  ];
+  const go = document.getElementById('go');
+  const intro = document.getElementById('intro');
+  const main = document.getElementById('main');
+
+  let idx = 0;
+
+  // Turn lights on one by one every 750ms
+  const onTimer = setInterval(function() {
+    if (idx < lights.length) {
+      lights[idx].classList.add('on');
+      idx++;
+    } else {
+      clearInterval(onTimer);
+      // All 5 lit — hold for 1.8s then GO
+      setTimeout(function() {
+        // Lights OUT simultaneously
+        lights.forEach(function(l) {
+          l.classList.remove('on');
+          l.classList.add('off');
+        });
+        // Flash GO text
+        setTimeout(function() {
+          go.classList.add('show');
+        }, 80);
+        // Fade intro, show portfolio
+        setTimeout(function() {
+          intro.classList.add('out');
+          main.classList.remove('hidden');
+          setTimeout(function() {
+            main.classList.add('show');
+            intro.style.display = 'none';
+            startObservers();
+          }, 200);
+        }, 900);
+      }, 1800);
+    }
+  }, 750);
+})();
+
+// ============================================================
+// SCROLL ANIMATIONS
+// ============================================================
+function startObservers() {
+
+  // Generic reveal
+  var rvEls = document.querySelectorAll('.rv');
+  var rvObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('vis'); } });
+  }, { threshold: 0.08 });
+  rvEls.forEach(function(el) { rvObs.observe(el); });
+
+  // Timeline items
+  var tiEls = document.querySelectorAll('.ti');
+  var tiObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('vis'); } });
+  }, { threshold: 0.1 });
+  tiEls.forEach(function(el) { tiObs.observe(el); });
+
+  // Edu cards
+  var ecEls = document.querySelectorAll('.ec');
+  ecEls.forEach(function(el, i) {
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          setTimeout(function() { e.target.classList.add('vis'); }, i * 100);
+        }
+      });
+    }, { threshold: 0.15 });
+    obs.observe(el);
+  });
+
+  // Project cards
+  var pcEls = document.querySelectorAll('.pc');
+  pcEls.forEach(function(el, i) {
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          setTimeout(function() { e.target.classList.add('vis'); }, i * 120);
+        }
+      });
+    }, { threshold: 0.1 });
+    obs.observe(el);
+  });
+
+  // Podium steps
+  var podEls = document.querySelectorAll('.pod');
+  podEls.forEach(function(el, i) {
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          setTimeout(function() { e.target.classList.add('vis'); }, i * 150);
+        }
+      });
+    }, { threshold: 0.2 });
+    obs.observe(el);
+  });
+
+  // Achievements
+  var achEls = document.querySelectorAll('.ach-item');
+  achEls.forEach(function(el, i) {
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          setTimeout(function() { e.target.classList.add('vis'); }, i * 100);
+        }
+      });
+    }, { threshold: 0.1 });
+    obs.observe(el);
+  });
+
+  // Cert items
+  var certEls = document.querySelectorAll('.cert');
+  certEls.forEach(function(el, i) {
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          setTimeout(function() { e.target.classList.add('vis'); }, i * 80);
+        }
+      });
+    }, { threshold: 0.1 });
+    obs.observe(el);
+  });
+
+  // Contact items
+  var ciEls = document.querySelectorAll('.ci');
+  ciEls.forEach(function(el, i) {
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          setTimeout(function() { e.target.classList.add('vis'); }, i * 100);
+        }
+      });
+    }, { threshold: 0.1 });
+    obs.observe(el);
+  });
+
+  // SKILL BARS — animate width on scroll
+  var bars = document.querySelectorAll('.sb-fill');
+  var barObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        var w = e.target.getAttribute('data-w');
+        e.target.style.width = w + '%';
+        barObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  bars.forEach(function(b) { barObs.observe(b); });
+
+  // NAV active link on scroll
+  var sections = document.querySelectorAll('section[id]');
+  var navAs = document.querySelectorAll('.nav-links a');
+  var navObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        navAs.forEach(function(a) {
+          a.style.color = '#555';
+          if (a.getAttribute('href') === '#' + e.target.id) { a.style.color = '#f0f0f0'; }
+        });
+      }
+    });
+  }, { threshold: 0.4 });
+  sections.forEach(function(s) { navObs.observe(s); });
+}
+</script>
+</body>
+</html>
